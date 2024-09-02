@@ -351,7 +351,8 @@ public class MemberServiceImpl  implements MemberService{
 	public void addCart(HttpServletRequest request, HttpSession session) {
 		String userid=session.getAttribute("userid").toString();
 		String pcode=request.getParameter("pcode");
-		if(mapper.isCart(userid)==false) {
+		System.out.println("userid"+userid+"pcode"+pcode);
+		if(!mapper.isCart(userid,pcode)) {
 			mapper.addCart(userid,pcode);
 		}
 	}

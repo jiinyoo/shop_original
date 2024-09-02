@@ -20,7 +20,7 @@ public interface MemberMapper {
 	public void chgSu(int su, String pcode, String userid);
 	public ArrayList<ProductDto> jjimList(String userid);
 	public void addCart(String userid, String pcode);
-	public boolean isCart(String userid);
+	public boolean isCart(String userid,String pcode);
 	public void jjimDel(String userid, String pcode);
 	
 
