@@ -347,5 +347,29 @@ public class MemberServiceImpl  implements MemberService{
 		
 	}
 
+	@Override
+	public void addCart(HttpServletRequest request, HttpSession session) {
+		String userid=session.getAttribute("userid").toString();
+		String pcode=request.getParameter("pcode");
+		if(mapper.isCart(userid)==false) {
+			mapper.addCart(userid,pcode);
+		}
+	}
+
+	@Override
+	public String jjimDel(HttpServletRequest request, HttpSession session) {
+		// TODO Auto-generated method stub
+		String userid=session.getAttribute("userid").toString();
+		//선택삭제는 1개 이상, 상품에서 삭제는 1개만
+		String[] pcodes=request.getParameter("pcode").split("/");
+		for(int i=0; i<pcodes.length; i++)
+		{
+			mapper.jjimDel(userid, pcodes[i]);
+		}
+		
+		return "redirect:/member/jjimList";
+		
+	}
+
 	
 }

@@ -46,6 +46,20 @@
 		inner join jjim as j
 		on p.pcode=j.pcode and j.userid=#{userid}
 	</select>
+	<insert id="addCart">
+		insert into cart(pcode,userid,su,writeday)
+		values(#{pcode},#{userid},1,now())
+	</insert>
+	<select id="isCart" resultType="Boolean">
+		select count(*) from cart
+   		where userid=#{userid} and pcode=#{pcode}
+	</select>
+	<delete id="jjimDel">
+		delete from jjim
+		where userid=#{userid} and pcode=#{pcode}
+	</delete>
+	
+	
 	
 	
 </mapper>

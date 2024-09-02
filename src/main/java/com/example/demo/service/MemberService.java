@@ -23,6 +23,10 @@ public interface MemberService {
 
 	public String jjimList(HttpSession session, Model model);
 
+	public void addCart(HttpServletRequest request, HttpSession session);
+
+	public String jjimDel(HttpServletRequest request, HttpSession session);
+
 	
 
 }

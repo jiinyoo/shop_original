@@ -82,6 +82,52 @@ function onecheck(index)
 }
 
 
+function addCart(pcode)
+{
+	
+	var chk=new XMLHttpRequest();
+	chk.onload=function()
+	{
+		var chk2=new XMLHttpRequest();
+		chk2.onload=function()
+		{
+			
+			document.getElementById("cartNum").innerText=chk2.responseText;
+		}
+		chk2.open("get","../main/cartNum"); //상대경로로 가져오면 안되고 
+		chk2.send();
+		
+		
+		
+		
+		if(confirm("장바구니로 이동하시겠습니까?"))
+		{
+			location="cartView";
+		}
+	}
+	chk.open("get","addCart?pcode="+pcode);
+	chk.send();
+	
+}
+
+
+
+function selDel()
+{
+	var subChk=document.getElementsByClassName("subCheck")
+	
+	
+	var pcode="";
+	for(var i=0; i<subChk.length; i++)
+	{
+		alert("hi")
+		if(subChk[i].checked)
+			pcode=pcode+subChk[i].value+"/";
+			alert(pcode);
+	}
+	
+	location="jjimDel?pcode="+pcode;
+}
 
 </script>
 
@@ -93,7 +139,7 @@ function onecheck(index)
 <caption><h2>찜 리스트 현황</h2></caption>
 <c:forEach items="${plist}" var="pdto" varStatus="sts">
 	<tr>
-		<td><input type="checkbox" class="subCheck" onclick="onecheck(${sts.index})"></td>
+		<td><input type="checkbox" class="subCheck" onclick="onecheck(${sts.index})" value="${pdto.pcode}"></td>
 		<td><img src="../static/product/${pdto.pimg}" width="80" height="80"></td>
 		<td>${pdto.title }</td>
 		<td width="140" align="center">
@@ -108,14 +154,15 @@ function onecheck(index)
 			<fmt:formatNumber value="${pdto.halinPrice}" type="number"/>원
 		</td>
 		<td width="100" align="center" style="line-height:24px">
-			<input type="button" value="장바구니"><br>
-			<input type="button" value="삭제">
+			<input type="button" value="장바구니" onclick="addCart('${pdto.pcode}')"><br>
+			<input type="button" value="삭제" onclick="location='jjimDel?pcode=${pdto.pcode}'">
 		</td>
 	</tr>
 </c:forEach>
 	<tr>
 		<td colspan="6">
 			전체 선택 <input type="checkbox" id="mainChk" onclick="whole()">
+			<input type="button" value="선택상품 삭제" onclick="selDel()">
 		</td>
 	</tr>
 
@@ -123,9 +170,5 @@ function onecheck(index)
 
 </table>
 </main>
-
-
-
-
 </body>
 </html>

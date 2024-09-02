@@ -75,5 +75,19 @@ public class MemberController {
 	}
 	
 	
+	@RequestMapping("/member/addCart")
+	public @ResponseBody void addCart(HttpServletRequest request,HttpSession session) {
+		
+		service.addCart(request,session);
+		
+	}
+	
+	@RequestMapping("/member/jjimDel")
+	public String jjimDel(HttpServletRequest request,HttpSession session) {
+		
+		return service.jjimDel(request,session);
+		
+	}
+	
 
 }
