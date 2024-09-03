@@ -67,7 +67,32 @@
 		where userid=#{userid}
 	</select>
 	
+	<select id="getMember" resultType="com.example.demo.dto.MemberDto">
+		select * from member
+		where userid=#{userid}
+	</select>
 	
+	<select id="getBaesong" resultType="com.example.demo.dto.BaesongDto">
+		select * from baesong
+		where userid=#{userid} and gibon=1
+	</select>
+	
+	<insert id="jusoWriteOk" parameterType="com.example.demo.dto.BaesongDto">
+		insert into baesong(userid,name,zip,juso,jusoEtc,phone,gibon,req)
+		value(#{userid},#{name},#{zip},#{juso},#{jusoEtc},#{phone},#{gibon},#{req})
+	
+	</insert>
+	<select id="jusoList" resultType="com.example.demo.dto.BaesongDto">
+		select * from baesong
+		where userid=#{userid}
+	</select>
+	<update id="gibonupdate">
+	   update baesong
+	   set userid=#{userid}, name=#{name}, zip=#{zip}, 
+	   juso=#{juso},jusoEtc=#{jusoEtc},phone=#{phone},gibon=#{gibon},req=#{req}
+	   where userid=#{userid} and gibon=1
+	
+	</update>
 </mapper>
 
 

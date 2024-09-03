@@ -136,8 +136,16 @@
     	   	},20);
        }	   
     }
-    window.onload=function()
+    window.onload=function(
     {
+    	var chk=new XMLHttpRequest();
+    	chk.onload=function()
+    	{
+    		
+    		document.getElementById("cartNum").innerText=chk.responseText;
+    	}
+    	chk.open("get","../main/cartNum"); //상대경로로 가져오면 안되고 
+    	chk.send();
     	document.getElementById("txt").focus();
     }
     function useridSearch()

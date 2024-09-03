@@ -326,6 +326,7 @@
 <body>
 	<main>
 		<form name="gform" method="post" action="gumae">
+		<input type="hidden" name="pcode" value="${pdto.pcode}">
 		<section id="first">
 			<div id="left">
 				<img src="../static/product/${pdto.pimg}" style="width:100%; margin:auto;">

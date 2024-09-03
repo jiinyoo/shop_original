@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.BaesongDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -30,7 +31,6 @@ public class ProductController {
 	}
 	
 	
-	
 	@RequestMapping("/product/productContent")
 	public String productContent(HttpServletRequest request, Model model,HttpSession session)
 	{
@@ -52,7 +52,29 @@ public class ProductController {
 		return service.addCart(request,session,model,response);
 	}
 	
+	@RequestMapping("/product/gumae")
+	public String gumae(HttpSession session, HttpServletRequest request,Model model)
+	{
+		return service.gumae(session,request,model);
+		
+	}
 	
-
+	@RequestMapping("/product/jusoWrite")
+	public String jusowrite(HttpServletRequest request,Model model)
+	{
+		return service.jusoWrite(request, model);
+	}
+	
+	@RequestMapping("/product/jusoWriteOk")
+	public String jusowriteOk(BaesongDto bdto, Model model,HttpSession session)
+	{
+		return service.jusoWriteOk(bdto,model,session);
+	}
+	
+	@RequestMapping("/product/jusoList")
+	public String jusoList(Model model,HttpSession session)
+	{
+		return service.jusoList(model,session);
+	}
 
 }

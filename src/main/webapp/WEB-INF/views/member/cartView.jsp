@@ -290,6 +290,31 @@ function totaladd(){
 */
 
 
+function gumaeAll()
+{
+	var subChk=document.getElementsByClassName("subChk");
+	var su=document.getElementsByClassName("csu");
+	
+	var pcodes="";
+	var sues="";
+	for(var i=0; i<subChk.length; i++)
+	{
+		if(subChk[i].checked) //체크가 된 상품이라면 => 상품코드, 수량을 특정 변수에 누적(구분자)
+			{
+				
+				pcodes=pcodes+subChk[i].value+"/";			
+				sues=sues+su[i].value+"/";			
+			}
+		
+		
+	}
+	
+	alert(pcodes+"\n"+sues);
+	location="../product/gumae?pcode="+pcodes+"&su="+sues;
+	
+}
+
+
 
 </script>
 </head>
@@ -334,10 +359,18 @@ function totaladd(){
 		<tr>
 	</c:forEach>
 	<tr>
-		<td colspan="8" height="30" valign="middle"><input type="checkbox" ${str2} id="mainChk" onclick="whole()">
+		<td colspan="6" height="30" valign="middle"><input type="checkbox" ${str2} id="mainChk" onclick="whole()">
 		전체선택 <input type="button" value="선택상품 삭제" onclick="selDel()">
 		<span id="suntaek"></span>		
 		</td>
+		<td colspan="2">
+			<input type="button" value="선택 상품 구매" onclick="gumaeAll()">
+		</td>
+		
+		
+		
+		
+		
 	</tr>
 		<td colspan="8" align="center">
 			총 상품 금액

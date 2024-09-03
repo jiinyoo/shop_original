@@ -2,6 +2,8 @@ package com.example.demo.service;
 
 import org.springframework.ui.Model;
 
+import com.example.demo.dto.BaesongDto;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -15,6 +17,16 @@ public interface ProductService {
 	String jjimOk(HttpServletRequest request, HttpSession session, Model model);
 
 	String addCart(HttpServletRequest request, HttpSession session, Model model, HttpServletResponse response);
+
+	String gumae(HttpSession session, HttpServletRequest request,Model model);
+
+	String jusoWriteOk(BaesongDto bdto, Model model,HttpSession session);
+
+	String jusoList(Model model, HttpSession session);
+
+	
+
+	String jusoWrite(HttpServletRequest request, Model model);
 
 
 }

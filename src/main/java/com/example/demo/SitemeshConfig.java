@@ -16,6 +16,8 @@ public class SitemeshConfig extends ConfigurableSiteMeshFilter{
         
         //제외할 폴더와 문서
         builder.addExcludedPath("/test/*");
+        builder.addExcludedPath("/product/jusoWrite");
+        builder.addExcludedPath("/product/jusoList");
         
         super.applyCustomConfiguration(builder);
         //부모클래스의 속성을 적용한다.

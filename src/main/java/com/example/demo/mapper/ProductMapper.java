@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.demo.dto.ProductDto;
+import com.example.demo.dto.BaesongDto;
 import com.example.demo.dto.CartDto;
+import com.example.demo.dto.MemberDto;
 
 @Mapper
 public interface ProductMapper {
@@ -24,6 +26,11 @@ public interface ProductMapper {
 	public int isCartCheck(String userid, String pcode);
 	public void suinc(String pcode, int su, String userid);
 	public void getCartNum(String userid);
+	public MemberDto getMember(String userid);
+	public BaesongDto getBaesong(String userid);
+	public void jusoWriteOk(BaesongDto bdto);
+	public ArrayList<BaesongDto> jusoList(String userid);
+	public void gibonupdate(BaesongDto bdto);
 	
 }
 

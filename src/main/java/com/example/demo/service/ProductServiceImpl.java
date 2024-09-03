@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.util.WebUtils;
 
+import com.example.demo.dto.BaesongDto;
 import com.example.demo.dto.CartDto;
 import com.example.demo.dto.ProductDto;
 import com.example.demo.mapper.ProductMapper;
@@ -356,6 +357,168 @@ public class ProductServiceImpl implements ProductService{
 			return "1";
 		}	
 	
+	}
+
+	@Override
+	public String gumae(HttpSession session, HttpServletRequest request,Model model) {
+		
+		
+		if(session.getAttribute("userid")==null)
+		{
+			return "redirect:/login/login";
+		}
+		else
+		{
+			//구매자 정보(회원)
+			String userid=session.getAttribute("userid").toString();
+			model.addAttribute("mdto",mapper.getMember(userid));
+			
+			
+			//배송지 정보
+			BaesongDto bdto=mapper.getBaesong(userid);
+			String breq=null;
+			if(bdto!=null) {
+				switch(bdto.getReq())
+				{
+					case 0: breq="문 앞"; break;
+					case 1: breq="직접 받고 부재시 문 앞"; break;
+					case 2: breq="경비실"; break;
+					case 3: breq="택배함"; break;
+					case 4: breq="공동 현관 앞"; break;
+					default: breq="선택 안됨";
+				}
+		
+			bdto.setBreq(breq);
+			}
+			model.addAttribute("bdto",bdto);
+			
+			//구매상품정보
+			String pcode=request.getParameter("pcode");
+			String su=request.getParameter("su");
+			String[] pcodes=pcode.split("/");
+			String[] imsi=su.split("/");
+			int[] sues=new int[imsi.length];
+			
+			for(int i=0; i<imsi.length; i++)
+			{
+				sues[i]=Integer.parseInt(imsi[i]);
+			}
+			
+			
+			ArrayList<ProductDto> plist=new ArrayList<ProductDto>();
+			for(int i=0; i<pcodes.length;i++)
+			{
+				ProductDto pdto=mapper.productContent(pcodes[i]);
+				pdto.setSu(sues[i]);
+				plist.add(pdto);
+			}
+			
+			model.addAttribute("plist",plist);
+			//결제관련금액 => 총상품 금액, 배송비, 적립예정금액
+			int halinPrice=0;
+			int baePrice=0;
+			int jukPrice=0;
+			
+			for(int i=0;i<plist.size(); i++)
+			{
+				ProductDto pdto=plist.get(i);
+				int price=pdto.getPrice();
+				int halin=pdto.getHalin();
+				int su2=pdto.getSu();
+				int bae=pdto.getBaeprice();
+				halinPrice=halinPrice+(int)(price-(price*halin/100.0))*su2;
+				baePrice=baePrice+bae;
+				int juk=pdto.getJuk();
+				jukPrice=jukPrice+(int)(price*juk/100.0);
+				
+		}
+			
+			model.addAttribute("baePrice",baePrice);
+			model.addAttribute("jukPrice",jukPrice);
+			model.addAttribute("halinPrice",halinPrice);
+			
+			return "/product/gumae";
+		}
+	
+		
+		
+	}
+
+	@Override
+	public String jusoWriteOk(BaesongDto bdto, Model model, HttpSession session) {
+		
+		String userid=session.getAttribute("userid").toString();
+		bdto.setUserid(userid);
+		//주소가 존재하지만 새로 추가할 경우의 gibon은 나중에 처리
+		
+		if(bdto.getTt().equals("1"))
+		{	
+			if(bdto.getGibon()==1)
+			{
+				mapper.gibonupdate(bdto);
+				model.addAttribute("bname", bdto.getName());
+				model.addAttribute("bjuso",bdto.getJuso());
+				model.addAttribute("bphone",bdto.getPhone());
+				String breq=null;
+				switch(bdto.getReq())
+				{
+					case 0: breq="문 앞"; break;
+					case 1: breq="직접 받고 부재시 문 앞"; break;
+					case 2: breq="경비실"; break;
+					case 3: breq="택배함"; break;
+					case 4: breq="공동 현관 앞"; break;
+					default: breq="선택 안됨";
+				
+				
+				}
+				model.addAttribute("breq",breq);
+				return "/product/jusoupdate";
+			}else {
+				mapper.jusoWriteOk(bdto);
+				return "redirect:/product/jusoList";
+			}
+		
+		}else
+		{
+			mapper.jusoWriteOk(bdto);
+			model.addAttribute("bname", bdto.getName());
+			model.addAttribute("bjuso",bdto.getJuso());
+			model.addAttribute("bphone",bdto.getPhone());
+			String breq=null;
+			switch(bdto.getReq())
+			{
+				case 0: breq="문 앞"; break;
+				case 1: breq="직접 받고 부재시 문 앞"; break;
+				case 2: breq="경비실"; break;
+				case 3: breq="택배함"; break;
+				case 4: breq="공동 현관 앞"; break;
+				default: breq="선택 안됨";
+			
+			
+			}
+			model.addAttribute("breq",breq);
+			
+			return "/product/jusoWriteOk";
+			
+		}
+		
+	}
+
+	@Override
+	public String jusoList(Model model, HttpSession session) {
+		String userid=session.getAttribute("userid").toString();
+		ArrayList<BaesongDto> blist=mapper.jusoList(userid);
+		model.addAttribute("blist",blist);		
+		return "/product/jusoList";
+	}
+
+
+
+	@Override
+	public String jusoWrite(HttpServletRequest request, Model model) {
+		// TODO Auto-generated method stub
+		model.addAttribute("tt",request.getParameter("tt"));
+		return "/product/jusoWrite";
 	}
 
 }
