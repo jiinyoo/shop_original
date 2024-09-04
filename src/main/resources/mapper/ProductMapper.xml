@@ -91,7 +91,38 @@
 	   set userid=#{userid}, name=#{name}, zip=#{zip}, 
 	   juso=#{juso},jusoEtc=#{jusoEtc},phone=#{phone},gibon=#{gibon},req=#{req}
 	   where userid=#{userid} and gibon=1
+	</update>
+	<select id="selectoriginal">
+		select * from baesong
+		where gibon=1
+	</select>
+	<select id="getJuk" resultType="Integer">
+		select juk from member
+		where userid=#{userid}
+	</select>
 	
+	<update id="chgPhone">
+		update member
+		set phone=#{mPhone}
+		where userid=#{userid}
+	</update>
+	<delete id="jusoDel">
+		delete from baesong
+		where id=#{id}
+	</delete>
+	<select id="jusoUpdate2" resultType="com.example.demo.dto.BaesongDto">
+		select * from baesong
+		where id=#{id}
+	</select>
+	<update id="jusoUpdateOk2" parameterType="com.example.demo.dto.BaesongDto">
+		update baesong
+		set name=#{name}, zip=#{zip}, juso=#{juso}
+		,jusoEtc=#{jusoEtc}, phone=#{phone},req=#{req},gibon=#{gibon}
+		where id=#{id}
+	</update>
+	<update id="gibonInit">
+		update baesong set gibon=0
+		where userid=#{userid}
 	</update>
 </mapper>
 

@@ -19,6 +19,11 @@
       margin:auto;
       overflow:auto;
     }
+    
+    main #member #memberPhone {
+   		width:100px;
+   		outline:none;
+    }
     main table {
       margin-top:50px;     
       margin-bottom:50px;
@@ -309,8 +314,12 @@ function gumaeAll()
 		
 	}
 	
-	alert(pcodes+"\n"+sues);
-	location="../product/gumae?pcode="+pcodes+"&su="+sues;
+	//alert(pcodes+"\n"+sues);
+	
+	if(pcodes!="")
+		location="../product/gumae?pcode="+pcodes+"&su="+sues;
+	else
+		alert("선택한 상품이 없어요");
 	
 }
 

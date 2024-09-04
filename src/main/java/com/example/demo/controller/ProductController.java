@@ -72,9 +72,47 @@ public class ProductController {
 	}
 	
 	@RequestMapping("/product/jusoList")
-	public String jusoList(Model model,HttpSession session)
+	public String jusoList(HttpServletRequest request, Model model,HttpSession session)
 	{
+		//System.out.println(request.getHeader("referer")); 이전페이지의 추소 출력
 		return service.jusoList(model,session);
 	}
 
+	
+	@RequestMapping("/product/chgPhone")
+	public @ResponseBody String chgPhone(HttpServletRequest request,HttpSession session)
+	{
+		return service.chgPhone(request,session);
+	}
+	
+	@RequestMapping("/product/jusoDel")
+	public String jusoDel(HttpServletRequest request,HttpSession session)
+	{
+		//사용자들이 주소를 복사해서 접근하는 경우
+		 //요청한 곳의 주소를 가져옴.
+		//복사를 해서 접근하게 되면 null값을 가진다.
+		
+		return service.jusoDel(request,session);
+	}
+	@RequestMapping("/product/jusoUpdate")
+	public String jusoUpdate(HttpServletRequest request,HttpSession session,Model model)
+	{
+		//사용자들이 주소를 복사해서 접근하는 경우
+		 //요청한 곳의 주소를 가져옴.
+		//복사를 해서 접근하게 되면 null값을 가진다.
+		
+		return service.jusoUpdate2(request,session,model);
+	}
+	
+	
+	@RequestMapping("/product/jusoUpdateOk")
+	public String jusoUpdateOk2(BaesongDto bdto,HttpSession session)
+	{
+		//보안 관련으로 세션을 보낼 수도 있다.
+		return service.jusoUpdateOk2(bdto,session);
+		
+	}
+	
+	
+	
 }

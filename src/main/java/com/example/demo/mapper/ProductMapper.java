@@ -31,6 +31,13 @@ public interface ProductMapper {
 	public void jusoWriteOk(BaesongDto bdto);
 	public ArrayList<BaesongDto> jusoList(String userid);
 	public void gibonupdate(BaesongDto bdto);
-	
+	public BaesongDto selectoriginal();
+	public int getJuk(String userid);
+	public void chgPhone(String userid, String mPhone);
+	public void jusoDel(String id);
+	public BaesongDto jusoUpdate2(String id);
+	public void jusoUpdateOk(BaesongDto bdto);
+	public void jusoUpdateOk2(BaesongDto bdto);
+	public void gibonInit(String userid);
 }
 

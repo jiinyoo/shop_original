@@ -24,51 +24,28 @@ function juso_search()  // 우편번호 버튼 클릭시 호출 함수명
         document.pkc.juso.value = addr;  // 주소
         // 커서를 상세주소 필드로 이동한다.
        document.pkc.jusoEtc.focus();
-        
-        
     }
   }).open();
 }
 
-window
+window.onload=function() {
+	document.pkc.req.value=${bdto.req};
+}
 
 
 
 </script> 
-<script>
-function check()
-{
-	if(document.getElementById("giboncheck").checked==true)
-	{
-		document.pkc.gibon.value=1;
-		
-	}else
-	{
-		document.pkc.gibon.value=0;
-	
-	}	
-}
-
-</script>
-
-
 
 </head>
 <body>
-<form name="pkc" mehtod="post" action="jusoWriteOk">
-<c:if test="${tt==null}">
-	<input type="hidden" name="gibon" value="1" id="gibon">
-</c:if>
-<c:if test="${tt!=null}">
-	<input type="hidden" name="gibon" value="0" id="gibon">
-</c:if>
-<input type="hidden" name="tt" value="${tt}">
+<form name="pkc" mehtod="post" action="jusoUpdateOk">
+<input type="hidden" name="id" value="${bdto.id}">
 	<h3>배송지 등록</h3>
-	<div><input type="text" name="name"></div>
-	<div><input type="text" name="zip" readonly><input type="button" value="주소검색" onclick="juso_search()"></div>
-	<div><input type="text" name="juso" readonly></div>
-	<div><input type="text" name="jusoEtc"></div>
-	<div><input type="text" name="phone"></div>
+	<div><input type="text" name="name" value="${bdto.name}"></div>
+	<div><input type="text" name="zip" value="${bdto.zip}" readonly readonly><input type="button" value="주소검색" onclick="juso_search()"></div>
+	<div><input type="text" name="juso" value="${bdto.juso}" readonly></div>
+	<div><input type="text" name="jusoEtc" value="${bdto.jusoEtc}"></div>
+	<div><input type="text" name="phone" value="${bdto.phone}"></div>
 	<div>
 		<select name="req">
 			<option value="0">문앞</option>
@@ -79,15 +56,13 @@ function check()
 		</select>
 	</div>
 	<div>
-		<c:set var="chk" value=""/>
-		<c:if test="${tt==null}">
+		<c:if test="${bdto.gibon==1}">
 			<c:set var="chk" value="checked"/>
 		</c:if>
 		
-		<input type="checkbox" name="giboncheck" value="1" ${chk} onclick="check()" id="giboncheck">기본 배송지로 지정 
+		<input type="checkbox" name="gibon" value="1" ${chk}>기본 배송지로 지정 
 	</div>
-	<div><input type="submit" value="주소 저장"></div>
+	<div><input type="submit" value="주소 등록"></div>
 </form>
-
 </body>
 </html>
