@@ -184,6 +184,12 @@ function chgPhone() {
 
 
 
+function viewSrc()
+{
+	   document.getElementById("src").innerText=document.getElementById("baesong").innerHTML;
+}
+
+
 
 </script>
 <style>
@@ -257,7 +263,10 @@ function juso_search()  // 우편번호 버튼 클릭시 호출 함수명
 
 </head>
 <body>
+<input type="button" value="소스보기" onclick="viewSrc()">
+ <div id="src"></div>  
 	<main>
+	<form name="gform" action="gumaeOk" method="post">
 		<section id="member">
 			<table width="1100" align="center">
 				<caption><h3>구매자 정보</h3></caption>
@@ -277,6 +286,10 @@ function juso_search()  // 우편번호 버튼 클릭시 호출 함수명
 			</table>
 		
 		</section>
+		
+		
+		<section id="baesong">
+		<input type="hidden" name="baeId" value="${bdto.id}">
 			<table width="1100" align="center">
 				<caption><h3 align="left">
 					배송지 정보
@@ -307,14 +320,17 @@ function juso_search()  // 우편번호 버튼 클릭시 호출 함수명
 				</tr>
 				
 			</table>
-		<section id="baesong">
-		
-		
 		</section>
+		
+		
+	
 		<section id="product">
 		<table width="1100" align="center">
+		<%-- <input type="hidden" name="userid" value="${userid}"> --%>
 		<caption><h3 align="left">구매상품정보</h3>
 			<c:forEach items="${plist}" var="pdto">
+			<input type="hidden" name="pcodes" value="${pdto.pcode}" class="pcode">
+			<input type="hidden" name="sues" value="${pdto.su}" class="su">
 				<tr>
 					<td colspan="2" bgcolor="#eeeeee">${pdto.baeEx}</td>
 				</tr>
@@ -362,6 +378,7 @@ function juso_search()  // 우편번호 버튼 클릭시 호출 함수명
 					</td>
 				</tr>
 				<tr>
+				<input type="hidden" name="chongPrice" value="${halinPrice+baePrice}" >
 					<td>총결제금액</td>
 					<td><span id="chong"><fmt:formatNumber value="${halinPrice+baePrice}" type="number"/></span></td>
 				</tr>			
@@ -372,22 +389,22 @@ function juso_search()  // 우편번호 버튼 클릭시 호출 함수명
 			<h3 align="left">결제 수단</h3>
 			<div id="sudanFirst">
 				<div>
-					<input type="radio" name="sudan" class="sudan" checked onclick="viewSub(0)">신용/체크카드
+					<input type="radio" name="sudan" class="sudan" value="0" checked onclick="viewSub(0)">신용/체크카드
 					<div class="sub" id="fsub">
 						<select name="card">
-							<option>선택</option>	
-							<option>신한카드</option>	
-							<option>농협카드</option>	
-							<option>우리카드</option>	
-							<option>국민카드</option>	
-							<option>하나카드</option>						
+							<option value="0">선택</option>	
+							<option value="1">신한카드</option>	
+							<option value="2">농협카드</option>	
+							<option value="3">우리카드</option>	
+							<option value="4">국민카드</option>	
+							<option value="6">하나카드</option>						
 						</select>
 						<select name="halbu">
-							<option>일시불</option>
-							<option>2개월</option>
-							<option>3개월</option>
-							<option>6개월</option>
-							<option>12개월</option>
+							<option value="0">일시불</option>
+							<option value="2">2개월</option>
+							<option value="3">3개월</option>
+							<option value="6">6개월</option>
+							<option value="12">12개월</option>
 						</select>
 					</div>
 				</div>
@@ -401,58 +418,59 @@ function juso_search()  // 우편번호 버튼 클릭시 호출 함수명
 			<div id="sudanSecond">
 				<div>다른 결제 수단<span id="down" onclick="down()">▼</span><span id="up" onclick="up()">▲</span></div>
 				<div class="subMain">
-					<input type="radio" name="sudan" class="sudan" onclick="viewSub(2)">계좌이체
+					<input type="radio" name="sudan" class="sudan"  value="1" onclick="viewSub(2)">계좌이체
 					<div class="sub">
 						<select name="bank">
-							<option>선택</option>	
-							<option>신한은행</option>	
-							<option>농협은행</option>	
-							<option>우리은행</option>	
-							<option>국민은행</option>	
-							<option>하나은행</option>	
+							<option value="0">선택</option>	
+							<option value="1">신한은행</option>	
+							<option value="2">농협은행</option>	
+							<option value="3">우리은행</option>	
+							<option value="4">국민은행</option>	
+							<option value="5">하나은행</option>	
 						</select>
 					</div>
 				</div>
-				<div class="subMain"><input type="radio" name="sudan" class="sudan" onclick="viewSub(3)">법인카드
+				<div class="subMain"><input type="radio" name="sudan" value="3" class="sudan" onclick="viewSub(3)">법인카드
 					<div class="sub">
 						<select name="lcard">
-							<option>선택</option>	
-							<option>신한카드</option>	
-							<option>농협카드</option>	
-							<option>우리카드</option>	
-							<option>국민카드</option>	
-							<option>하나카드</option>						
+							<option value="0">선택</option>	
+							<option value="1"> 신한카드</option>	
+							<option value="2">농협카드</option>	
+							<option value="3">우리카드</option>	
+							<option value="4">국민카드</option>	
+							<option value="5">하나카드</option>						
 						</select>
 					</div>
 				</div>
-				<div class="subMain"><input type="radio" name="sudan" class="sudan" onclick="viewSub(4)">휴대폰
+				<div class="subMain"><input type="radio" name="sudan" value="4" class="sudan" onclick="viewSub(4)">휴대폰
 					<div class="sub">
 						<select name="tong">
-							<option>선택</option>	
-							<option>SKT</option>	
-							<option>KT</option>	
-							<option>LG</option>	
-							<option>별정통신</option>								
+							<option value="0">선택</option>	
+							<option value="1">SKT</option>	
+							<option value="2">KT</option>	
+							<option value="3">LG</option>	
+							<option value="4">별정통신</option>								
 						</select>
 					</div>
 				</div>
-				<div class="subMain"><input type="radio" name="sudan" class="sudan" onclick="viewSub(5)">무동장입금
+				<div class="subMain"><input type="radio" name="sudan" value="5" class="sudan" onclick="viewSub(5)">무동장입금
 					<div class="sub">
 						<select name="nbank">
-							<option>선택</option>	
-							<option>신한은행</option>	
-							<option>농협은행</option>	
-							<option>우리은행</option>	
-							<option>국민은행</option>	
-							<option>하나은행</option>	
+							<option value="0">선택</option>	
+							<option value="1">신한은행</option>	
+							<option value="2">농협은행</option>	
+							<option value="3">우리은행</option>	
+							<option value="4">국민은행</option>	
+							<option value="5">하나은행</option>	
 						</select>
 					</div>
 				</div>
 			</div>
 		</section>
-		
-		
-		
+		<section>
+			<input type="submit" value="상품구매">
+		</section>
+	</form>	
 	</main>
 </body>
 </html>

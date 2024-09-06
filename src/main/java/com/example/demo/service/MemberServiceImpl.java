@@ -42,7 +42,8 @@ public class MemberServiceImpl  implements MemberService{
 	public String memberOk(MemberDto mdto) 
 	{
 		mapper.memberOk(mdto);
-		return "../login/login";
+		//방금 변경한 부분
+		return "redirect:/login/login";
 	}
 
 	@Override
@@ -104,11 +105,6 @@ public class MemberServiceImpl  implements MemberService{
 				
 				//1.모든 상품의 구매금액, 모든 상품의 적립금, 모든 상품의 배송비
 				int halinpriceTot=0, jukpriceTot=0,baepriceTot=0;
-				
-				
-				
-				
-				
 				for(int i=0;i<pMapAll.size();i++)
 				{
 					HashMap map=pMapAll.get(i);
@@ -371,6 +367,54 @@ public class MemberServiceImpl  implements MemberService{
 		return "redirect:/member/jjimList";
 		
 	}
+
+	@Override
+	public String jumunList(HttpSession session, Model model) {
+		
+		//어떤 상품을 
+		String userid=session.getAttribute("userid").toString();
+		ArrayList<HashMap> mapAll=mapper.jumunList(userid);
+		
+		
+		for(int i=0;i<mapAll.size();i++)
+		{
+			// state의 값을 문자열로 변경후 저장
+			String state=mapAll.get(i).get("state").toString();
+			String stateMsg=null;
+			switch(state)
+			{
+			   case "0": stateMsg="결제완료"; break;
+			   case "1": stateMsg="상품준비중"; break;
+			   case "2": stateMsg="배송중"; break;
+			   case "3": stateMsg="배송완료"; break;
+			   case "4": stateMsg="취소완료"; break;
+			   case "5": stateMsg="반품신청"; break;
+			   case "6": stateMsg="반품완료"; break;
+			   case "7": stateMsg="교환신청"; break;
+			   case "8": stateMsg="교환완료"; break;
+			   default: stateMsg="문의바람";
+			}
+			mapAll.get(i).put("stateMsg", stateMsg);
+		}
+		
+		
+		
+		
+		model.addAttribute("mapAll",mapAll);
+		return "member/jumunList";
+	}
+
+	@Override
+	public String chgState(HttpServletRequest request) 
+	{
+		String state=request.getParameter("state");
+		String id=request.getParameter("id");
+		
+		mapper.chgState(state,id);
+		 
+		return "redirect:/member/jumunList";
+	}
+	
 
 	
 }

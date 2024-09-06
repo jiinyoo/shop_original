@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.BaesongDto;
+import com.example.demo.dto.GumaeDto;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -26,8 +28,6 @@ public class ProductController {
 	public String productList(HttpServletRequest request, Model model)
 	{
 		return service.productList(request,model);
-		
-		
 	}
 	
 	
@@ -113,6 +113,22 @@ public class ProductController {
 		
 	}
 	
+	
+	@RequestMapping("/product/gumaeOk")
+	public String gumaeOk(GumaeDto gdto,HttpSession session)
+	{
+		//System.out.println(gdto.getPcodes()[0]+....);
+		//System.out.println(gdto.getSues()[0]+gdto.getSues()[1])+gdto.getSues()[2]+gdto.getSues()[3]));
+		return service.gumaeOk(gdto,session); 
+	}
+	
+	@RequestMapping("/product/gumaeView")
+	public String gumaeView(HttpServletRequest request, Model model)
+	{
+		//System.out.println(gdto.getPcodes()[0]+....);
+		//System.out.println(gdto.getSues()[0]+gdto.getSues()[1])+gdto.getSues()[2]+gdto.getSues()[3]));
+		return service.gumaeView(request,model); 
+	}
 	
 	
 }

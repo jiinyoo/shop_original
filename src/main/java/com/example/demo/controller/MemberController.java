@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -84,10 +85,20 @@ public class MemberController {
 	
 	@RequestMapping("/member/jjimDel")
 	public String jjimDel(HttpServletRequest request,HttpSession session) {
-		
 		return service.jjimDel(request,session);
-		
 	}
+	
+	@RequestMapping("/member/jumunList")
+	public String jumunList(HttpSession session,Model model) {
+		return service.jumunList(session,model);
+	}
+	
+	@GetMapping("/member/chgState")
+	    public String chgState(HttpServletRequest request)
+	    {
+	    	return service.chgState(request);
+	    }
+
 	
 
 }

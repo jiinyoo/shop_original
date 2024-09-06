@@ -59,7 +59,13 @@
 		where userid=#{userid} and pcode=#{pcode}
 	</delete>
 	
-	
-	
-	
+	<select id="jumunList" resultType="HashMap">
+		select p.title, p.pimg, b.name, b.juso, g.chongPrice, g.state, g.su, g.useJuk, g.sudan,g.writeday,g.jumuncode,g.id
+		from gumae as g inner join product as p on p.pcode=g.pcode inner join baesong as b on g.baeId=b.id
+		where g.userid=#{userid} order by g.id desc 
+	</select>
+	<update id="chgState">
+	    update gumae set state=#{state}
+	    where id=#{id}
+  	</update>
 </mapper>

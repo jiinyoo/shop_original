@@ -59,6 +59,7 @@ function transJuso(n){
 	opener.document.getElementById("bjuso").innerText=document.getElementsByClassName("bjuso")[n].innerText;
 	opener.document.getElementById("bphone").innerText=document.getElementsByClassName("bphone")[n].innerText;
 	opener.document.getElementById("breq").innerText=document.getElementsByClassName("breq")[n].innerText;
+	opener.document.gform.baeId.value=document.getElementsByClassName("id")[n].value;
 	
 	close();
 }
@@ -67,6 +68,7 @@ function transJuso(n){
 </head>
 <body>
 	<c:forEach items="${blist}" var="bdto" varStatus="sts">
+	<input type="hidden" class="id" value="${bdto.id}">
 		<div class="baeJuso">
 		<c:if test="${bdto.gibon==1}" >
 			<div><span id="gibon">기본배송지</span></div>

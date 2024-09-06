@@ -1,12 +1,14 @@
 package com.example.demo.mapper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.demo.dto.ProductDto;
 import com.example.demo.dto.BaesongDto;
 import com.example.demo.dto.CartDto;
+import com.example.demo.dto.GumaeDto;
 import com.example.demo.dto.MemberDto;
 
 @Mapper
@@ -39,5 +41,13 @@ public interface ProductMapper {
 	public void jusoUpdateOk(BaesongDto bdto);
 	public void jusoUpdateOk2(BaesongDto bdto);
 	public void gibonInit(String userid);
+	public int getBaeId(String userid);
+	public int getJumuncode(String jumuncode);
+	public void gumaeOk(GumaeDto gdto);
+	public void cartDel(String userid, String pcode);
+	public void chgProduct(String pcode, int su);
+	public void chgJuk(int useJuk,String userid);
+	public ArrayList<GumaeDto> gumaeView(String jumuncode);
+	public ArrayList<HashMap> gumaeView2(String jumuncode);
 }
 

@@ -13,6 +13,7 @@ import org.springframework.web.util.WebUtils;
 
 import com.example.demo.dto.BaesongDto;
 import com.example.demo.dto.CartDto;
+import com.example.demo.dto.GumaeDto;
 import com.example.demo.dto.ProductDto;
 import com.example.demo.mapper.ProductMapper;
 import com.example.demo.util.MyUtil;
@@ -332,12 +333,7 @@ public class ProductServiceImpl implements ProductService{
 				if (ch == 1) {
 				    // 2. 해당 상품이 장바구니에 이미 존재하는 경우
 				    //    - 장바구니에 있는 수량을 업데이트
-					
 				    mapper.suinc(pcode, su, userid);
-				    
-				    
-				  
-				    
 				} else {
 				    // 4. 해당 상품이 장바구니에 존재하지 않는 경우
 				    //    - 장바구니 테이블에 새로 추가
@@ -484,6 +480,7 @@ public class ProductServiceImpl implements ProductService{
 			{
 				BaesongDto obdto=mapper.selectoriginal();
 				mapper.gibonupdate(bdto);
+				
 				model.addAttribute("bname", bdto.getName());
 				model.addAttribute("bjuso",bdto.getJuso());
 				model.addAttribute("bphone",bdto.getPhone());
@@ -506,11 +503,15 @@ public class ProductServiceImpl implements ProductService{
 				return "/product/jusoupdate";
 			}else {
 				mapper.jusoWriteOk(bdto);
+				
+				//방금 이력된 주소의 id필드의 값을 알 수 없다.
+		
 				return "redirect:/product/jusoList";
 			}
 		
 		}else
 		{
+			
 			mapper.jusoWriteOk(bdto);
 			model.addAttribute("bname", bdto.getName());
 			model.addAttribute("bjuso",bdto.getJuso());
@@ -528,6 +529,9 @@ public class ProductServiceImpl implements ProductService{
 			
 			}
 			model.addAttribute("breq",breq);
+			
+			int id=mapper.getBaeId(userid);
+			model.addAttribute("id", id);
 			
 			return "/product/jusoWriteOk";
 			
@@ -605,6 +609,154 @@ public class ProductServiceImpl implements ProductService{
 		return "redirect:/product/jusoList";
 	}
 
+	@Override
+	public String gumaeOk(GumaeDto gdto, HttpSession session) {
+		
+		//userid에 세션 변수 저장, jumuncode를 생성
+		String userid=session.getAttribute("userid").toString();
+		
+		//주문코드 => j20240905001
+		LocalDate today=LocalDate.now();
+		int y=today.getYear();
+		int m=today.getMonthValue();
+		int d=today.getDayOfMonth();
+		
+		String m2=String.format("%02d", m);
+		String d2=String.format("%02d", d);
+		
+		String jumuncode="j"+y+m2+d2;
+		int imsi=mapper.getJumuncode(jumuncode);
+		System.out.println(imsi);
+		jumuncode=jumuncode+String.format("%03d", imsi);
+		gdto.setJumuncode(jumuncode);
+		
+		String[] pcodes=gdto.getPcodes();
+		int[] sues=gdto.getSues();
+		
+		//장바구니에서 구매된 상품은 삭제
+		
+		
+		//product 테이블에서 su 필드의 값을 -1, pansu의 값을 +1
+		
+		//member테이블의 juk필드의 값에 useJuk값을 뺀다. => 저장
+		
+		
+		//사용한 적립금
+		mapper.chgJuk(gdto.getUseJuk(),userid);
+		
+		for(int i=0; i<pcodes.length; i++) {
+			gdto.setPcode(pcodes[i]);
+			gdto.setSu(sues[i]);
+			gdto.setUserid(userid);
+			mapper.gumaeOk(gdto);
+			//장바구니에 있는 구매된 상품은 삭제
+			mapper.cartDel(userid,pcodes[i]);
+			//product테이블에 su필드의 값을 -수량 ,pansu의 값을 +수량
+			mapper.chgProduct(pcodes[i],sues[i]);
+		}
+		
+		
+		
+		
+		return "redirect:/product/gumaeView?jumuncode="+jumuncode;
+	}
 
+	
+	
+	//inner조인 없이 사용하기
+/*	@Override
+	public String gumaeView(HttpServletRequest request, Model model) {
+		
+		String jumuncode=request.getParameter("jumuncode");
+		ArrayList<GumaeDto> glist=mapper.gumaeView(jumuncode);
+		
+		//배송 정보, 상품 정보를 glist를 이용하여 가져오기
+		ArrayList<ProductDto> plist=new ArrayList<ProductDto>();
+		ArrayList<BaesongDto> blist=new ArrayList<BaesongDto>();
+		for(int i=0; i<glist.size();i++) {
+			//상품정보를 읽어서 plist에 add()
+			GumaeDto gdto=glist.get(i);
+			ProductDto pdto=mapper.productContent(gdto.getPcode());
+			plist.add(pdto);		
+		
+			//배송정보를 읽어서 blist에 add()
+			BaesongDto bdto=mapper.jusoUpdate2(gdto.getBaeId()+"");
+			blist.add(bdto);		
+		}
+		return "/product/gumaeView";
+	}
+	*/
+	
+	
+	@Override
+	public String gumaeView(HttpServletRequest request, Model model) {
+		
+		//product, baesong,gumae에서 gumae에 pcode를 기준으로 가져와야함
+		String jumuncode=request.getParameter("jumuncode");
+		System.out.println("주문코드"+ jumuncode);
+		ArrayList<HashMap> mapAll=mapper.gumaeView2(jumuncode);
 
+		//하나의 할인된 상품금액 => price =>map에 저장
+		//총상품금액(halinPrice), 총배송비(cBaeprice),도착예정(baeEx)
+		
+		int halinPrice=0, cBaePrice=0;
+		String baeEx=null;
+		String breq=null;
+		for(int i=0; i<mapAll.size(); i++) {
+			HashMap map=mapAll.get(i);
+			//price할인된 상품금액
+			
+			int price=Integer.parseInt(map.get("price").toString());
+			int halin=Integer.parseInt(map.get("halin").toString());
+			price=(int)(price-(price*halin/100.0)); //하나의 삼품 구매
+			//map.put("price",price); 여기에 저장하면 뷰에 전달이 안된다.
+			mapAll.get(i).put("price", price);
+			//총상품금액
+			int su=Integer.parseInt(map.get("su").toString());
+			halinPrice=halinPrice+(price*su);
+			//총배송비
+			cBaePrice=cBaePrice+Integer.parseInt(map.get("baeprice").toString());
+			//배송예정
+			LocalDate today=LocalDate.now();
+			int baeday=Integer.parseInt(map.get("baeday").toString());
+			LocalDate xday=today.plusDays(Integer.parseInt(map.get("baeday").toString()));
+			String yoil=MyUtil.getYoil(xday);
+			baeEx=null;
+			if(baeday==1)
+			{
+				baeEx="내일("+yoil+") 도착예정";
+			}
+			else if(baeday==2)
+			     {
+				     baeEx="모레("+yoil+") 도착예정";
+			     }
+			     else
+			     {
+			    	 int m=xday.getMonthValue();
+			    	 int d=xday.getDayOfMonth();
+			    	 baeEx=m+"/"+d+"("+yoil+") 도착예정";
+			     }
+			
+				mapAll.get(i).put("baeEx",baeEx);
+				breq=null;
+				switch(Integer.parseInt(map.get("req").toString()))
+				{
+					case 0: breq="문 앞"; break;
+					case 1: breq="직접 받고 부재시 문 앞"; break;
+					case 2: breq="경비실"; break;
+					case 3: breq="택배함"; break;
+					case 4: breq="공동 현관 앞"; break;
+					default: breq="선택 안됨";
+				}
+			
+			}
+		
+		model.addAttribute("mapAll",mapAll);
+		model.addAttribute("halinPrice",halinPrice);
+		model.addAttribute("cBaePrice",cBaePrice);
+		model.addAttribute("breq",breq);
+		
+		return "/product/gumaeView";
+	}
+	
 }
