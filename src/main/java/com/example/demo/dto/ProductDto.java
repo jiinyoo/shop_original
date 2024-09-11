@@ -19,6 +19,7 @@ public class ProductDto {
 	
 	private int halinPrice, jukPrice;
 	private String baeEx;
+	private int gstar,hstar,ystar;
 	
 	
 	

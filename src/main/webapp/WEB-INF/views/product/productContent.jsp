@@ -172,7 +172,59 @@
      background:purple;
      color:white
    }
-	
+   
+   main #second {/*상품 상세 */
+   	 margin-top:70px;
+   	
+   }
+   
+   main #third {
+   		 height:200px;
+   }
+   
+   main #fourth {
+   		height:200px;
+   }
+   
+   main #fifth { /*배송/*교환*/
+   
+   }
+   
+     main #allMenu {
+      width:1100px;
+      height:50px;
+   }
+   main #allMenu ul {
+      width:1100px;
+      height:50px;
+      padding-left:0px;
+   }
+   main #allMenu ul li {
+      list-style-type:none;
+      display:inline-block;
+      width:273px;
+      height:50px;
+      border:1px solid purple;
+      margin-left:-6px;
+      text-align:center;
+      line-height:50px;
+      background:white;
+   }
+   main #allMenu ul li:first-child {
+      margin-left:0px;
+   }
+   
+   main .imsi {
+   		width:1100px;
+   		height:49px;
+   }
+   
+   main #allMenu ul li a {
+   		text-decoration:none;
+   		color:black;
+   	
+   }
+   
 </style>
  <script src="https://code.jquery.com/jquery-latest.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script> 
@@ -315,6 +367,41 @@
 	
 
 	
+	function scrollMove()
+	{
+		//document.getElementById("aa").innerText=document.documentElement.scrollTop;
+		
+		var st=document.documentElement.scrollTop;
+		if(st>=691){
+			document.getElementById("allMenu").style.position="fixed";
+			document.getElementById("allMenu").style.top="0px";
+			
+		}else {
+			document.getElementById("allMenu").style.position="relative";
+			document.getElementById("allMenu").style.top="0px";
+		}
+	}
+	
+	window.onscroll=scrollMove;
+	
+	
+	function chgStyle(n) {
+		
+		var inmenu=document.getElementsByClassName("inMenu");
+		for(i=0; i<inmenu.length; i++) {
+			inmenu[i].parentNode.style.background="white";
+			inmenu[i].style.color="black";
+		}
+		
+		inmenu[n].parentNode.style.background="purple";
+		inmenu[n].style.color="white";
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 
@@ -351,15 +438,6 @@
 					<c:forEach begin="1" end="${gstar}">
 						<img src="../static/pro/star2.png" width="10">
 					</c:forEach>
-					
-					
-					
-					
-					
-					
-					
-					
-					
 				 	<span style="letter-spacing:0px"> ${pdto.review}개 상품평 </span>
 				</div>
 		      	</div>
@@ -407,11 +485,36 @@
 				</div>
 			</div>
 		</section>
-		<section id="second"></section>
-		<section id="third"></section>
-		<section id="fourth"></section>
-		<section id="fourth"></section>
 		</form>
+		
+		
+	  <div id="allMenu">
+	<div id="aa"></div>
+      <ul>
+        <li><a href="#menu1" onclick="chgStyle(0)" class="inMenu"> 상품상세 </a></li>
+        <li><a href="#menu2" onclick="chgStyle(1)" class="inMenu"> 상품평</a> </li>
+        <li><a href="#menu3" onclick="chgStyle(2)" class="inMenu"> 상품문의</a> </li>
+        <li><a href="#menu4" onclick="chgStyle(3)" class="inMenu"> 배송/교환/취소</a> </li>
+      </ul>
+    </div>
+		<section id="second">
+			<div class="imsi" id="menu1"></div>
+			<h3 class="cmenu" >상품 상세</h3>
+			<img src="../static/product/${pdto.dimg}" width="1100">
+		</section><!-- 상품상세 -->
+		<section id="third" >
+			<div class="imsi" id="menu2"></div>
+			<h3 class="cmenu">상품평</h3>
+		</section><!-- 상품평 -->
+		<section id="fourth" >
+			<div class="imsi" id="menu3"></div>
+			<h3 class="cmenu" >상품 문의</h3>
+		</section><!-- 상품문의 -->
+		<section id="fifth"  >
+			<div class="imsi" id="menu4"></div>
+			<h3 class="cmenu">배송/교환/취소</h3>
+			<img src="../static/main/exch.png">
+		</section><!-- 배송/교환 -->
 	</main>
 </body>
 </html>

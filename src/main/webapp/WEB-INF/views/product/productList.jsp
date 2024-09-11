@@ -133,9 +133,15 @@ main a.active {
 	      	<div></div>
 	      	<div id="pbaeEx"> ${pdto.baeEx} </div>       
 	      	<div>
-				<c:forEach begin="1" end="5">
-					<img src="../static/pro/star1.png" width="10">
-				</c:forEach>	      	
+					<c:forEach begin="1" end="${pdto.ystar}">
+						<img src="../static/pro/star1.png" width="10">
+					</c:forEach>
+					<c:if test="${pdto.hstar==1}">
+						<img src="../static/pro/star3.png" width="10">
+					</c:if>
+					<c:forEach begin="1" end="${pdto.gstar}">
+						<img src="../static/pro/star2.png" width="10">
+					</c:forEach>      	
 	      	</div>
 	      	<c:if test="${pdto.juk!=0}">
 	      		<div>

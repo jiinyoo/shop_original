@@ -173,13 +173,32 @@ public class ProductServiceImpl implements ProductService{
 					
 				}
 				
-				
-			
 				plist.get(i).setHalinPrice(halinPrice);
 				plist.get(i).setJukPrice(jukPrice);
 				plist.get(i).setBaeEx(beaEx);
-		}
 		
+				   double star=pdto.getStar();
+				    //star에서 소수점만 추출해낸다.
+				    
+				    int ystar=0,hstar=0,gstar=0;
+				    
+				    ystar=(int)star;
+				    
+				    //소수부분을 가지고
+				    star=star-ystar;
+				    if(star >=0.8) {
+				    	ystar=ystar+1;
+				    }else if (0.3<=star && star<0.8) {
+				    	hstar=1;
+				    }
+				    
+				    gstar=5-(ystar+hstar);
+				   
+				    
+				    plist.get(i).setYstar(ystar);
+				    plist.get(i).setGstar(gstar);
+				    plist.get(i).setHstar(hstar);
+		}
 		
 		model.addAttribute("plist",plist);
 		model.addAttribute("pcode",pcode);
