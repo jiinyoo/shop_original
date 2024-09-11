@@ -50,6 +50,16 @@
     main table td > div:first-child {
      text-align:center;
    }
+   main table td .img_wrap {
+   	 height:230px;
+   	 padding:10px;
+   	 box-sizing:border-box;
+   }
+   main table td .img_wrap img {
+     max-height:100%;
+     max-width:100%;
+   }
+   
    main table td > #ptitle {
    
    }
@@ -112,8 +122,8 @@ main a.active {
     <tr>
     <c:forEach items="${plist}" var="pdto" varStatus="sts" >
 	      <td onclick="location='productContent?pcode=${pdto.pcode}'" valign="top">
-    			<div style="text-align: center;">
-        				<img src="../static/product/${pdto.pimg}" width="200" height="300">
+    			<div class="img_wrap" style="text-align: center;">
+        				<img src="../static/product/${pdto.pimg}" >
    				</div>
 	      	<div id="ptitle">${pdto.title}</div>
 	      	<c:if test="${pdto.halin!=0}">

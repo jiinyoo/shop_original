@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.dto.MemberDto;
+import com.example.demo.dto.ReviewDto;
 import com.example.demo.service.MemberService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -98,7 +99,18 @@ public class MemberController {
 	    {
 	    	return service.chgState(request);
 	    }
-
+	
+	@GetMapping("/member/reviewWrite")
+    public String reviewWrite(HttpServletRequest request,Model model)
+    {
+    	return service.reviewWrite(request,model);
+    }
+	
+	@RequestMapping("/member/reviewWriteOk")
+    public String reviewWrite(ReviewDto rdto,HttpSession session)
+    {
+    	return service.reviewWriteOk(rdto,session);
+    }
 	
 
 }

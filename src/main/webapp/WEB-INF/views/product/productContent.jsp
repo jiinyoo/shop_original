@@ -341,9 +341,25 @@
 					</div>
 				<div>
 				<div id="star">
-					<c:forEach begin="1" end="5">
+					<!-- 별을 찍는다. -->
+					<c:forEach begin="1" end="${ystar}">
 						<img src="../static/pro/star1.png" width="10">
 					</c:forEach>
+					<c:if test="${hstar==1}">
+						<img src="../static/pro/star3.png" width="10">
+					</c:if>
+					<c:forEach begin="1" end="${gstar}">
+						<img src="../static/pro/star2.png" width="10">
+					</c:forEach>
+					
+					
+					
+					
+					
+					
+					
+					
+					
 				 	<span style="letter-spacing:0px"> ${pdto.review}개 상품평 </span>
 				</div>
 		      	</div>

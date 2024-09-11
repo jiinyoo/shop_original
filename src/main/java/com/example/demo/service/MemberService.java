@@ -3,6 +3,7 @@ package com.example.demo.service;
 import org.springframework.ui.Model;
 
 import com.example.demo.dto.MemberDto;
+import com.example.demo.dto.ReviewDto;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -30,6 +31,10 @@ public interface MemberService {
 	public String jumunList(HttpSession session, Model model);
 
 	public String chgState(HttpServletRequest request);
+
+	public String reviewWrite(HttpServletRequest request,Model model);
+
+	public String reviewWriteOk(ReviewDto rdto, HttpSession session);
 
 	
 

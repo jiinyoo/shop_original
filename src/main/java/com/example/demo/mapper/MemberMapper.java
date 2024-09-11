@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.example.demo.dto.MemberDto;
 import com.example.demo.dto.ProductDto;
+import com.example.demo.dto.ReviewDto;
+
 
 @Mapper
 public interface MemberMapper {
@@ -24,6 +26,9 @@ public interface MemberMapper {
 	public void jjimDel(String userid, String pcode);
 	public ArrayList<HashMap> jumunList(String userid);
 	public void chgState(String state, String id);
-	
+	public void reviewWriteOk(ReviewDto rdto);
+	public double getReviewAvg(String pcode);
+	public void setProduct(double star,String pcode);
+	public void chgIsReview(int id);
 
 }

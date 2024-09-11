@@ -233,6 +233,43 @@ public class ProductServiceImpl implements ProductService{
 			jImg="jjim2.png";
 		model.addAttribute("jImg",jImg);
 	    model.addAttribute("pdto",pdto);
+	    
+	    
+	    
+	    //product테이블의 star필드의 값을 이용하여
+	    //노란별 ,반벌,.회색별의 개수를 뷰에 전달
+	    double star=pdto.getStar();
+	    //star에서 소수점만 추출해낸다.
+	    
+	    int ystar=0,hstar=0,gstar=0;
+	    
+	    ystar=(int)star;
+	    
+	    //소수부분을 가지고
+	    star=star-ystar;
+	    if(star >=0.8) {
+	    	ystar=ystar+1;
+	    }else if (0.3<=star && star<0.8) {
+	    	hstar=1;
+	    }
+	    
+	    gstar=5-(ystar+hstar);
+	    model.addAttribute("ystar",ystar);
+	    model.addAttribute("hstar", hstar);
+	    model.addAttribute("gstar",gstar);	    //double sosu=
+	    //만약 소수 노란별? 0.8이상
+	    //star는 반올림한 값을 가져간다.
+
+	    //만약 sosu가 0.3≤=값<0.8
+	    //소수는 내림하고 //반별을 하나찍고 // 회색별-1을 출력한다.
+
+	    //만약 소수가 0.3미만이라면 
+	    //소수는 내림하고 회색별을 출력한다.
+	    
+	    
+	    
+	    
+	    
 		return "/product/productContent";
 	}
 
