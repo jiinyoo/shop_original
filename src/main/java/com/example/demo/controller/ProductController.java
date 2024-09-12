@@ -137,4 +137,17 @@ public class ProductController {
 		return service.reviewDel(request,model); 
 	}
 	
+	
+	@RequestMapping("/product/questWriteOk")
+	public String reviewDel(HttpServletRequest request, HttpSession session, Model model)
+	{
+		
+		return service.questWriteOk(request,session,model); 
+	}
+	
+	
+	
+	
+	
+	
 }

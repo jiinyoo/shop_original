@@ -52,5 +52,7 @@ public interface ProductMapper {
 	public ArrayList<HashMap> gumaeView2(String jumuncode);
 	public ArrayList<ReviewDto> getReview(String pcode);
 	public void reviewDel(String id);
+	public int getRef(String pcode);
+	public void questWriteOk(String pcode, String userid, String content, int ref);
 }
 

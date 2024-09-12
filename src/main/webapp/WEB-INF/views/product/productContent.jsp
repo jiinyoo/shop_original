@@ -200,7 +200,34 @@
    
    main #fourth {
    		height:200px;
+   		position:relative;
    }
+   
+   main #fourth #qwform {
+   		width:300px;
+   		height:200px;
+   		position:absolute;
+   		left:400px;
+   		top:100px;
+   		background:white;
+   		text-align:center;
+   		visibility:hidden;
+   }
+   
+   
+   main #fourth #qwform textarea {
+   		width:290px;
+   		height:130px;
+   }
+   
+   main #fourth #qwform input {
+   		width:300px;
+   		height:36px;
+   		border:1px solid purple;
+   		background:white;
+   		color:purple;
+   }
+   
    
    main #fifth { /*배송/*교환*/
    
@@ -415,8 +442,10 @@
 	
 	
 	
-	
-	
+	//상품문의 폼생성
+	function questWrite() {
+		document.getElementById("qwform").style.visibility="visible";
+	}
 	
 	
 	
@@ -428,6 +457,11 @@
 </head>
 <body>
 	<main>
+		
+	
+	
+	
+	
 		<form name="gform" method="post" action="gumae">
 		<input type="hidden" name="pcode" value="${pdto.pcode}">
 		<section id="first">
@@ -567,8 +601,23 @@
 			
 		</section><!-- 상품평 -->
 		<section id="fourth" >
+			<div id="qwform">
+				<form method="post" action="questWriteOk">
+					<input type="hidden" name="pcode" value="${pdto.pcode}">
+					<textarea name="content"></textarea><br>
+					<input type="submit" value="문의"	>						
+				</form>
+			</div>
+		
+		
+		
+		
+		
+		
 			<div class="imsi" id="menu3"></div>
-			<h3 class="cmenu" >상품 문의</h3>
+			<h3 class="cmenu">상품 문의<input type="button" value="문의하기" onclick="questWrite()"></h3>
+			
+			
 		</section><!-- 상품문의 -->
 		<section id="fifth"  >
 			<div class="imsi" id="menu4"></div>

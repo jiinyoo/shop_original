@@ -839,5 +839,25 @@ public class ProductServiceImpl implements ProductService{
 		
 		return "redirect:/product/productContent?pcode="+pcode;
 	}
+
+	@Override
+	public String questWriteOk(HttpServletRequest request, HttpSession session, Model model) {
+		// TODO Auto-generated method stub
+		String pcode=request.getParameter("pcode");
+		String userid=session.getAttribute("userid").toString();
+		String content=request.getParameter("content");
+		
+		
+		
+		int ref=mapper.getRef(pcode);
+		
+		//ref값을 구하기 //pcode가 다르면 서로다른 pcode가 ref값이 다를 수 있다.//select ifnull(max(ref),0)+1 from proQna where pcode="p0101010101";
+		
+		//proqna에 저장
+		mapper.questWriteOk(pcode,userid,content,ref);
+		
+		
+		return "redirect:/product/productContent?pcode="+pcode;
+	}
 	
 }

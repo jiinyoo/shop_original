@@ -41,5 +41,7 @@ public interface ProductService {
 
 	String reviewDel(HttpServletRequest request, Model model);
 
+	String questWriteOk(HttpServletRequest request, HttpSession session, Model model);
+
 
 }

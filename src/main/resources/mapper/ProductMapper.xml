@@ -167,13 +167,25 @@
 		where g.jumuncode=#{jumuncode}
 	</select>
 	<select id="getReview" resultType="com.example.demo.dto.ReviewDto">
-		select *,concat(left(userid,4),'****') as user from review
+		select *, rpad(substring(userid,1,4),char_length(userid),"*") as user from review
 		where pcode=#{pcode}
 	</select>
 	<delete id="reviewDel">
 		delete from review
 		where id=#{id}
 	</delete>
+	<select id="getRef" resultType="Integer">
+		select ifnull(max(ref),0) +1
+		from proQna
+		where pcode=#{pcode}
+	</select>
+	
+	<insert id="questWriteOk">
+		insert into proQna(userid,pcode,content,ref,qna,writeday)
+		values(#{userid},#{pcode},#{content},#{ref},0,now())
+	</insert>
+	
+	
 </mapper>
 
 
