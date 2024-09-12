@@ -39,5 +39,7 @@ public interface ProductService {
 
 	String gumaeView(HttpServletRequest request, Model model);
 
+	String reviewDel(HttpServletRequest request, Model model);
+
 
 }

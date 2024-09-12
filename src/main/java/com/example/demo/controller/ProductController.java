@@ -130,5 +130,11 @@ public class ProductController {
 		return service.gumaeView(request,model); 
 	}
 	
+	@RequestMapping("/product/reviewDel")
+	public String reviewDel(HttpServletRequest request, Model model)
+	{
+		
+		return service.reviewDel(request,model); 
+	}
 	
 }

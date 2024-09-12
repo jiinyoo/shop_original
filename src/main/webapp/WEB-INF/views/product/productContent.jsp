@@ -179,8 +179,24 @@
    }
    
    main #third {
-   		 height:200px;
+   		<c:if test="${rlist.size()==0}">
+   		   height:100px;
+   		</c:if>
+   		<c:if test="${rlist.size()!=0}">
+   		   margin-bottom:50px;
+   		</c:if>
    }
+   
+   main #third .myReview {
+   		width:1084px;
+   		height:150px;
+   		border:1px solid purple;
+   		margin-top:14px;
+   		overflow:auto;
+   		padding:8px;
+   	
+   }
+   
    
    main #fourth {
    		height:200px;
@@ -505,6 +521,50 @@
 		<section id="third" >
 			<div class="imsi" id="menu2"></div>
 			<h3 class="cmenu">상품평</h3>
+			<div id="">평균별점
+				<c:forEach begin="1" end="${ystar}">
+						<img src="../static/pro/star1.png" width="10">
+					</c:forEach>
+					<c:if test="${hstar==1}">
+						<img src="../static/pro/star3.png" width="10">
+					</c:if>
+					<c:forEach begin="1" end="${gstar}">
+						<img src="../static/pro/star2.png" width="10">
+				</c:forEach>(상품평:${rlist.size()}개)
+			</div>
+			
+			
+			<c:forEach items="${rlist}" var="rdto">
+				<div class="myReview">
+				
+					<div>
+						<div id="mleft" style="float:left">
+							${rdto.user}(${rdto.writeday})
+						</div>
+						<div id="mright" style="float:right">
+						<c:if test="${rdto.userid==userid}">
+							<a href="reviewDel?id=${rdto.id}&pcode=${rdto.pcode}">삭제</a>
+						</c:if>
+						신고하기
+						</div>
+					</div>
+					<div>
+						<c:forEach begin="1" end="${rdto.star}">
+							<img src="../static/pro/star1.png" width="10">
+						</c:forEach>
+						<c:forEach begin="1" end="${5-rdto.star}">
+						<img src="../static/pro/star2.png" width="10">
+						</c:forEach>
+					</div>
+					<div>${rdto.oneLine}</div>
+					<div>${rdto.content}</div>
+				</div>
+			</c:forEach>
+			
+			
+			
+			
+			
 		</section><!-- 상품평 -->
 		<section id="fourth" >
 			<div class="imsi" id="menu3"></div>

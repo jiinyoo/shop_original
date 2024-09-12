@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.demo.dto.ProductDto;
+import com.example.demo.dto.ReviewDto;
 import com.example.demo.dto.BaesongDto;
 import com.example.demo.dto.CartDto;
 import com.example.demo.dto.GumaeDto;
@@ -49,5 +50,7 @@ public interface ProductMapper {
 	public void chgJuk(int useJuk,String userid);
 	public ArrayList<GumaeDto> gumaeView(String jumuncode);
 	public ArrayList<HashMap> gumaeView2(String jumuncode);
+	public ArrayList<ReviewDto> getReview(String pcode);
+	public void reviewDel(String id);
 }
 

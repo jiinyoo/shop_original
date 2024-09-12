@@ -15,6 +15,7 @@ import com.example.demo.dto.BaesongDto;
 import com.example.demo.dto.CartDto;
 import com.example.demo.dto.GumaeDto;
 import com.example.demo.dto.ProductDto;
+import com.example.demo.dto.ReviewDto;
 import com.example.demo.mapper.ProductMapper;
 import com.example.demo.util.MyUtil;
 
@@ -252,7 +253,7 @@ public class ProductServiceImpl implements ProductService{
 			jImg="jjim2.png";
 		model.addAttribute("jImg",jImg);
 	    model.addAttribute("pdto",pdto);
-	    
+	    model.addAttribute("userid",userid);	    
 	    
 	    
 	    //product테이블의 star필드의 값을 이용하여
@@ -285,6 +286,17 @@ public class ProductServiceImpl implements ProductService{
 	    //만약 소수가 0.3미만이라면 
 	    //소수는 내림하고 회색별을 출력한다.
 	    
+	    
+	    
+	    //현재 상품에 대한 상품평 테이블의 내용을 읽어 온다.
+	   ArrayList<ReviewDto> rlist= mapper.getReview(pcode);
+	   
+	   //content필드에 <br>태그 추가
+	   for(int i=0; i<rlist.size();i++) {
+		   String content=rlist.get(i).getContent().replace("\r\n", "<br>");
+		   rlist.get(i).setContent(content);
+	   }
+	    model.addAttribute("rlist",rlist);
 	    
 	    
 	    
@@ -813,6 +825,19 @@ public class ProductServiceImpl implements ProductService{
 		model.addAttribute("breq",breq);
 		
 		return "/product/gumaeView";
+	}
+
+	@Override
+	public String reviewDel(HttpServletRequest request, Model model) {
+		
+		String id=request.getParameter("id");
+		String pcode=request.getParameter("pcode");
+		
+		
+		mapper.reviewDel(id);
+		
+		
+		return "redirect:/product/productContent?pcode="+pcode;
 	}
 	
 }
