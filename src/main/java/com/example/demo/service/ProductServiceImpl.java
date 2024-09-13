@@ -14,6 +14,7 @@ import org.springframework.web.util.WebUtils;
 import com.example.demo.dto.BaesongDto;
 import com.example.demo.dto.CartDto;
 import com.example.demo.dto.GumaeDto;
+import com.example.demo.dto.ProQnaDto;
 import com.example.demo.dto.ProductDto;
 import com.example.demo.dto.ReviewDto;
 import com.example.demo.mapper.ProductMapper;
@@ -298,6 +299,10 @@ public class ProductServiceImpl implements ProductService{
 	   }
 	    model.addAttribute("rlist",rlist);
 	    
+	    
+	    //상품문의를 읽어서 뷰에 전달
+	    ArrayList<ProQnaDto> plist=mapper.questAll(pdto);
+	    model.addAttribute("plist",plist);	    
 	    
 	    
 	    
@@ -857,6 +862,14 @@ public class ProductServiceImpl implements ProductService{
 		mapper.questWriteOk(pcode,userid,content,ref);
 		
 		
+		return "redirect:/product/productContent?pcode="+pcode;
+	}
+
+	@Override
+	public String questDel(HttpServletRequest request, HttpSession session, Model model) {
+		String ref=request.getParameter("ref");
+		String pcode=request.getParameter("pcode");
+		mapper.questDel(ref);
 		return "redirect:/product/productContent?pcode="+pcode;
 	}
 	

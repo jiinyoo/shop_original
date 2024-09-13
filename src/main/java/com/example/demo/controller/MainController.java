@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -33,9 +34,9 @@ public class MainController {
 	}
 	
 	@RequestMapping("/main/index")
-	public String index()
+	public String index(Model model)
 	{
-		return service.index();
+		return service.index(model);
 	}
 	
 	
@@ -64,6 +65,13 @@ public class MainController {
 	{
 		return service.cartNum(request,session);
 	}
+	
+	@RequestMapping("/main/timeTest")
+	public String timeTest(HttpServletRequest request, HttpSession session)
+	{
+		return "/main/timeTest";
+	}
+	
 	
 	
 	

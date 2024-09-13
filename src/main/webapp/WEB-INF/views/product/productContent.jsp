@@ -199,34 +199,58 @@
    
    
    main #fourth {
-   		height:200px;
-   		position:relative;
+     <c:if test="${rlist.size()==0}">
+       height:100px;
+    </c:if>
+    <c:if test="${rlist.size()!=0}">
+       margin-bottom:50px;
+    </c:if>
+     font-weight:900;
+    
+     position:relative;
    }
    
    main #fourth #qwform {
-   		width:300px;
-   		height:200px;
-   		position:absolute;
-   		left:400px;
-   		top:100px;
-   		background:white;
-   		text-align:center;
-   		visibility:hidden;
+   		 width:300px;
+    	 height:200px;
+	     position:absolute;
+	     left:400px;
+	     top:100px;
+	     background:white;
+	     text-align:center;
+	     visibility:hidden;
    }
    
    
    main #fourth #qwform textarea {
-   		width:290px;
-   		height:130px;
+ 	    width:294px;
+    	height:130px;
+     	border:1px solid purple;
    }
    
    main #fourth #qwform input {
    		width:300px;
-   		height:36px;
-   		border:1px solid purple;
-   		background:white;
-   		color:purple;
+     	height:40px;
+     	border:1px solid purple;
+    	background:white;
+     	color:purple;
    }
+   
+   main #fourth table {
+     border-spacing:0px;
+   }
+   main #fourth table tr td {
+     height:120px;
+     border-bottom:1px solid purple;
+   }
+   main #fourth table tr:first-child td {
+     border-top:2px solid purple;  
+   }
+   main #fourth table tr:last-child td {
+     border-bottom:2px solid purple;
+   }
+   
+   
    
    
    main #fifth { /*배송/*교환*/
@@ -267,6 +291,8 @@
    		color:black;
    	
    }
+   
+
    
 </style>
  <script src="https://code.jquery.com/jquery-latest.js"></script>
@@ -615,8 +641,37 @@
 		
 		
 			<div class="imsi" id="menu3"></div>
-			<h3 class="cmenu">상품 문의<input type="button" value="문의하기" onclick="questWrite()"></h3>
+			<h3 class="cmenu">상품 문의
+			<c:if test="${userid!=null}">
+				<input type="button" value="문의하기" onclick="questWrite()">
+			</c:if>
+			<c:if test="${userid==null }">
+				<input type="button" value="문의하기" onclick="location='../login/login?pcode=${pdto.pcode}'">
+			</c:if>
+			</h3>
 			
+			<table width="1100" align="center">
+				<c:forEach items="${plist}" var="pdto">
+					 <tr>
+			           <td width="100"> 
+			             <c:if test="${pdto.qna==0}">
+			               <span style="background:#444444;color:white;padding:3px">질문</span>
+			             </c:if>
+			             <c:if test="${pdto.qna==1}">
+			               <span style="margin-left:30px;background:blue;color:white;padding:3px"> 답변</span>
+			             </c:if>
+			           </td>
+			           <td width="120"> ${pdto.userid} </td>
+			           <td> ${pdto.content} </td>
+			           <td width="120" style="font-size:11px" align="center"> ${pdto.writeday}
+			             <p>
+			             <c:if test="${pdto.userid==userid}">
+			               <a href="questDel?ref=${pdto.ref}&pcode=${pdto.pcode}" style="font-size:13px"> 삭제 </a>
+			             </c:if>
+			           </td>
+        			 </tr>
+				</c:forEach>
+			</table>
 			
 		</section><!-- 상품문의 -->
 		<section id="fifth"  >

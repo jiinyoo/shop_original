@@ -43,5 +43,7 @@ public interface ProductService {
 
 	String questWriteOk(HttpServletRequest request, HttpSession session, Model model);
 
+	String questDel(HttpServletRequest request, HttpSession session, Model model);
+
 
 }

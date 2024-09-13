@@ -147,6 +147,13 @@ public class ProductController {
 	
 	
 	
+	@RequestMapping("/product/questDel")
+	public String questDel(HttpServletRequest request, HttpSession session, Model model)
+	{
+		
+		return service.questDel(request,session,model); 
+	}
+	
 	
 	
 	

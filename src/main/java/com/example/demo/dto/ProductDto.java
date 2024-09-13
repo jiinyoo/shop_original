@@ -21,6 +21,9 @@ public class ProductDto {
 	private String baeEx;
 	private int gstar,hstar,ystar;
 	
+	//타임세일 관련
+	private int sales;
+	private String salesDay;
 	
 	
 

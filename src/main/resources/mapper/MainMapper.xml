@@ -23,5 +23,24 @@
 		from cart
 		where userid=#{userid}
 	</select>
-
+	<select id="getProduct1" resultType="com.example.demo.dto.ProductDto">
+		select * from product where sales=1
+		order by id desc 
+		limit 4;
+	</select>
+	<select id="getProduct2" resultType="com.example.demo.dto.ProductDto">
+		select * from product where sales=1
+		order by halin desc 
+		limit 4;
+	</select>
+	<select id="getProduct3" resultType="com.example.demo.dto.ProductDto">
+		select * from product where sales=1
+		order by writeday desc 
+		limit 4;
+	</select>
+	<select id="getProduct4" resultType="com.example.demo.dto.ProductDto">
+		select * from product where sales=1
+		order by pansu desc 
+		limit 4;
+	</select>
 </mapper>

@@ -11,6 +11,7 @@ import com.example.demo.dto.BaesongDto;
 import com.example.demo.dto.CartDto;
 import com.example.demo.dto.GumaeDto;
 import com.example.demo.dto.MemberDto;
+import com.example.demo.dto.ProQnaDto;
 
 @Mapper
 public interface ProductMapper {
@@ -54,5 +55,7 @@ public interface ProductMapper {
 	public void reviewDel(String id);
 	public int getRef(String pcode);
 	public void questWriteOk(String pcode, String userid, String content, int ref);
+	public ArrayList<ProQnaDto> questAll(ProductDto pdto);
+	public void questDel(String ref);
 }
 
