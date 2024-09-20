@@ -370,11 +370,28 @@ public class MemberServiceImpl  implements MemberService{
 	}
 
 	@Override
-	public String jumunList(HttpSession session, Model model) {
+	public String jumunList(HttpSession session, Model model, HttpServletRequest request) {
+		
+		//num값 => 0.전부, 3,6,12개월, 1:기간 검색
+		
+		
+		int num = (request.getParameter("num") != null) ? Integer.parseInt(request.getParameter("num")) : 0;
+		
+		
+		
+		
+		String start=request.getParameter("start");
+		String end=request.getParameter("end");
+		
+		
+		
+		
+		
+		
 		
 		//어떤 상품을 
 		String userid=session.getAttribute("userid").toString();
-		ArrayList<HashMap> mapAll=mapper.jumunList(userid);
+		ArrayList<HashMap> mapAll=mapper.jumunList(userid, num,start, end);
 		
 		
 		for(int i=0;i<mapAll.size();i++)

@@ -63,7 +63,13 @@
 		select p.title, p.pimg, b.name,p.pcode, b.juso, g.chongPrice, g.state, g.su, g.useJuk, g.sudan,g.writeday,g.jumuncode
 		,g.id,g.isReview,g.jumuncode as jumun, (select count(*) from gumae where jumuncode=jumun) as cnt
 		from gumae as g inner join product as p on p.pcode=g.pcode inner join baesong as b on g.baeId=b.id
-		where g.userid=#{userid} order by g.id desc 
+		<if test="num!=0 and num!=1"> <!-- num>0 으로 하면 더 간단-->
+		where g.userid=#{userid} and g.writeday >= date_sub(now(),interval ${num} month) 
+		</if>
+		<if test="num==1">
+		and <![CDATA[g.writeday >=#{start} and g.writeday <= #{end} ]]>
+		</if>
+		order by g.id desc 
 	</select>
 	<update id="chgState">
 	    update gumae set state=#{state}

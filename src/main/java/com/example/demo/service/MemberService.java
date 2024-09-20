@@ -28,7 +28,7 @@ public interface MemberService {
 
 	public String jjimDel(HttpServletRequest request, HttpSession session);
 
-	public String jumunList(HttpSession session, Model model);
+	public String jumunList(HttpSession session, Model model, HttpServletRequest request);
 
 	public String chgState(HttpServletRequest request);
 
