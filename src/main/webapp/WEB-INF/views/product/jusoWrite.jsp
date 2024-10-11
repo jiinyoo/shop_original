@@ -64,11 +64,11 @@ function check()
 </c:if>
 <input type="hidden" name="tt" value="${tt}">
 	<h3>배송지 등록</h3>
-	<div><input type="text" name="name"></div>
-	<div><input type="text" name="zip" readonly><input type="button" value="주소검색" onclick="juso_search()"></div>
-	<div><input type="text" name="juso" readonly></div>
-	<div><input type="text" name="jusoEtc"></div>
-	<div><input type="text" name="phone"></div>
+	<div><input type="text" name="name" placeholder="이름"></div>
+	<div><input type="text" name="zip" readonly placeholder="우편번호"><input type="button" value="주소검색" onclick="juso_search()"></div>
+	<div><input type="text" name="juso" readonly placeholder="주소"></div>
+	<div><input type="text" name="jusoEtc" placeholder="상세주소"></div>
+	<div><input type="text" name="phone" placeholder="전화번호"></div>
 	<div>
 		<select name="req">
 			<option value="0">문앞</option>

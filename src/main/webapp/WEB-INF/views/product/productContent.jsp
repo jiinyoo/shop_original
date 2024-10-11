@@ -292,8 +292,6 @@
    	
    }
    
-
-   
 </style>
  <script src="https://code.jquery.com/jquery-latest.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script> 
@@ -492,7 +490,7 @@
 		<input type="hidden" name="pcode" value="${pdto.pcode}">
 		<section id="first">
 			<div id="left">
-				<img src="../static/product/${pdto.pimg}" style="width:100%; margin:auto;">
+				<img src="../static/product/${pdto.pimg}" style="width:90%; margin:auto;">
 			</div>
 				<div id="right">
 				<div id="ptitle">${pdto.title}

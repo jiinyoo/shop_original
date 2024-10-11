@@ -263,7 +263,7 @@ function juso_search()  // 우편번호 버튼 클릭시 호출 함수명
 
 </head>
 <body>
-<input type="button" value="소스보기" onclick="viewSrc()">
+<!--  <input type="button" value="소스보기" onclick="viewSrc()">-->
  <div id="src"></div>  
 	<main>
 	<form name="gform" action="gumaeOk" method="post">

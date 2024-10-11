@@ -8,8 +8,16 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<style>
+	main {
+	 width:1100px;
+      height:600px;
+      margin:auto;
+	  margin-bottom:300px;    
+	}
+</style>
 <body>
-<main>
+<main style="margin-bottom:300px;">
 	<div id="product">
 		<table width="900" align="center">
 			<caption><h3>상품 정보</h3></caption>

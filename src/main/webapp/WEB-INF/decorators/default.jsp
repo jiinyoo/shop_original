@@ -74,14 +74,14 @@
 	
 	
 	header #search{
-		width:400px;
+		width:380px;
 		height:70px;
 		float:left;
 		margin:auto;
 	}
 	
 	header #member{
-		width:300px;
+		width:320px;
 		height:70px;
 		line-height:70px;
 		background:white;
@@ -575,10 +575,7 @@ function formSubmit()
 				</span>
 				<a href="../login/logout">로그 아웃</a>
 			</c:if>
-
 			| 고객센터		
-			
-			
 		</div>
 	</header>
 	<nav>	

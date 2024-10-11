@@ -17,7 +17,7 @@
       width:1100px;
       height:600px;
       margin:auto;
-      overflow:auto;
+	  margin-bottom:100px;    
     }
     
     main #member #memberPhone {

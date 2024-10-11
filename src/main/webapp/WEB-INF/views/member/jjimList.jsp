@@ -12,7 +12,7 @@
       width:1100px;
       height:600px;
       margin:auto;
-      overflow:auto;
+     margin-bottom:100px;
     }
     main table {
       margin-top:50px;     
