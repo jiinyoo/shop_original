@@ -93,7 +93,11 @@
 		update gumae set isReview=1
 		where id=#{id}
 	</update>
-	
+	<select id="getJumun" resultType="HashMap">
+    select right(g.writeday,2) as writeday, p.title from gumae as g
+    inner join product as p on g.pcode=p.pcode
+    where userid=#{userid} and g.writeday like concat(#{year},"-",#{month},"%")
+  </select>
 	
 	
 </mapper>

@@ -25,4 +25,6 @@ public interface MainMapper {
 	public ArrayList<ProductDto> getProduct3();
 	public ArrayList<ProductDto> getProduct4();
 
+	public void delUser();
+
 }

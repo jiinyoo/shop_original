@@ -96,6 +96,13 @@ main a.active {
 <body> <!-- product/productList.jsp -->
   <main>
   <table width="1100" align="center">
+  <caption> 
+       <c:if test="${empty search}">
+        <h4 align="left" style="letter-spacing:2px;font-size:13px;float:left;"> ${pos} </h4>
+       </c:if>
+       <c:if test="${!empty search}">
+        <h4 align="left" style="letter-spacing:2px;font-size:13px;float:left;"> 검색어 : ${search} </h4>
+       </c:if> 
     <h4 align="left" style="letter-spacing:2px;font-size:13px;float:left;"> ${pos} </h4> 
     <h4 style="float:right;font-size:13px;">
         <span class="links">
@@ -119,6 +126,7 @@ main a.active {
                class="${param.order == '5' ? 'active' : ''}">최신상품순</a>
         </span>
     </h4>
+    </caption>
     <tr>
     <c:forEach items="${plist}" var="pdto" varStatus="sts" >
 	      <td onclick="location='productContent?pcode=${pdto.pcode}'" valign="top">

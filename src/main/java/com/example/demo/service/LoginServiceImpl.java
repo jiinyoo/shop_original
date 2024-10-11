@@ -13,6 +13,7 @@ import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -37,7 +38,7 @@ public class LoginServiceImpl implements LoginService{
 	}
 
 	@Override
-	public String loginOk(MemberDto mdto,HttpSession session,HttpServletRequest request,HttpServletResponse response) {
+	public String loginOk(MemberDto mdto,HttpSession session,HttpServletRequest request,HttpServletResponse response, ServletContext application) {
 		// TODO Auto-generated method stub
 		if(mapper.loginOk(mdto)!=null)
 		{
@@ -82,28 +83,7 @@ public class LoginServiceImpl implements LoginService{
 	            	
 	            	
 	            }
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
+	            	            
 	           /* String[] pcodes = getPcode.split("/");
 	            
 	 
@@ -137,6 +117,17 @@ public class LoginServiceImpl implements LoginService{
 			session.setAttribute("name", mapper.loginOk(mdto));
 			session.setAttribute("userid", mdto.getUserid());
 			//mdto를 활용해서 값을 가져올 수 있다는 사실을 명심
+			String names=application.getAttribute("names").toString();
+			
+		
+			
+			names=names+mdto.getUserid()+"/";
+			
+			application.setAttribute("names", names);
+		
+			
+			
+			
 			if(mdto.getPcode().length()==0)
 			{
 				return "redirect:/main/index";

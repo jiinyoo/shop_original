@@ -8,11 +8,14 @@ import com.example.demo.dto.DaeDto;
 import com.example.demo.dto.JungDto;
 import com.example.demo.dto.SoDto;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 public interface MainService {
-	public String index(Model model);
+	public String index(Model model, ServletContext application,HttpServletRequest request
+			,HttpServletResponse response) ;
 
 	public ArrayList<DaeDto> getDae();
 
@@ -21,5 +24,7 @@ public interface MainService {
 	public ArrayList<SoDto> getSo(HttpServletRequest request);
 
 	public String cartNum(HttpServletRequest request, HttpSession session);
+
+	public String topClose(HttpServletRequest request, HttpServletResponse response);
 
 }

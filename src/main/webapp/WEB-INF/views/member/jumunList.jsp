@@ -227,9 +227,10 @@
   <div align="center" id="pkc">
   <form method="post" action="jumunList">
   	<input type="hidden" name="num" value="1"><!-- 기간 검색이라는 걸 알리려고 -->
+  	<input type="button" onclick="location='monthView'" value="월별검색">
   	<input type="button" onclick="location='jumunList?num=3'" value="3개월">
   	<input type="button" onclick="location='jumunList?num=6'" value="6개월">
-  	<input type="button" onclick="location='jumunList?num=9'" value="12개월">
+  	<input type="button" onclick="location='jumunList?num=12'" value="12개월">
   	<input type="text" name="start" readonly class="gigan" onfocus="calView(-2,-2,0)">
   	<!-- 발생하지 않을 값을 만들어 줌 -2 -->
   	<input type="text" name="end" readonly class="gigan" onfocus="calView(-2,-2,1)">

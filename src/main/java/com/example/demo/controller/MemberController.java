@@ -112,5 +112,11 @@ public class MemberController {
     	return service.reviewWriteOk(rdto,session);
     }
 	
+	@RequestMapping("/member/monthView")
+    public String monthView(HttpServletRequest request,Model model,
+    		HttpSession session)
+    {
+    	return service.monthView(request,model,session);
+    }
 
 }

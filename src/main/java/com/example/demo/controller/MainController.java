@@ -16,7 +16,9 @@ import com.example.demo.mapper.MainMapper;
 import com.example.demo.service.MainService;
 import com.example.demo.service.MainServiceImpl;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -25,6 +27,9 @@ public class MainController {
 	@Autowired
 	@Qualifier("ms")
 	private MainService service;
+	
+	@Autowired
+	private ServletContext application;
 
 	
 	@RequestMapping("/")
@@ -34,9 +39,10 @@ public class MainController {
 	}
 	
 	@RequestMapping("/main/index")
-	public String index(Model model)
+	public String index(Model model,HttpServletRequest request
+			,HttpServletResponse response)
 	{
-		return service.index(model);
+		return service.index(model,application,request, response);
 	}
 	
 	
@@ -72,6 +78,12 @@ public class MainController {
 		return "/main/timeTest";
 	}
 	
+	@RequestMapping("/main/topClose")
+	public @ResponseBody String topClose(HttpServletRequest request,
+			HttpServletResponse response)
+	{
+		return service.topClose(request,response);
+	}
 	
 	
 	

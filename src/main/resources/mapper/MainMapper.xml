@@ -43,4 +43,10 @@
 		order by pansu desc 
 		limit 4;
 	</select>
+	<delete id="delUser">
+			delete from member
+			where id=10
+	</delete>
+	
+	
 </mapper>

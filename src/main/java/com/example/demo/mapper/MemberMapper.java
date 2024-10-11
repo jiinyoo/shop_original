@@ -30,5 +30,6 @@ public interface MemberMapper {
 	public double getReviewAvg(String pcode);
 	public void setProduct(double star,String pcode);
 	public void chgIsReview(int id);
+	public ArrayList<HashMap> getJumun(int year, String month, String userid);
 
 }

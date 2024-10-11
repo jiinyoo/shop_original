@@ -15,7 +15,7 @@ import com.example.demo.dto.ProQnaDto;
 
 @Mapper
 public interface ProductMapper {
-    public ArrayList<ProductDto> productList(String pcode, String str, int index);
+    public ArrayList<ProductDto> productList(String pcode, String str, int index, String search);
     //대,중,소분류의 NAME을 가져오는 메소드
     public String getDaeName(String code);
     public String getJungName(String code, String daecode);

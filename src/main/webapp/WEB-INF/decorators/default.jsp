@@ -74,14 +74,14 @@
 	
 	
 	header #search{
-		width:420px;
+		width:400px;
 		height:70px;
 		float:left;
 		margin:auto;
 	}
 	
 	header #member{
-		width:380px;
+		width:300px;
 		height:70px;
 		line-height:70px;
 		background:white;
@@ -448,14 +448,23 @@ function viewSrc()
 
 window.onload=function()
 {
-	var chk=new XMLHttpRequest();
-	chk.onload=function()
-	{
-		
-		document.getElementById("cartNum").innerText=chk.responseText;
-	}
-	chk.open("get","../main/cartNum"); //상대경로로 가져오면 안되고 
-	chk.send();
+	  var chk=new XMLHttpRequest();
+	   chk.onload=function()
+	   {
+		   //alert(chk.responseText);
+		   // 구분자 /를 이용하여 분리했을때 0번 인덱스는 장바구니의 갯수
+		   document.getElementById("cartNum").innerText=chk.responseText.split("/")[0];
+		   // 장바구니의 갯수를 가져온다
+		   
+		   // 구분자 /를 이용하여 분리했을때 1번은 0(쿠키변수X)  or 1(쿠키변수 O)
+		   if(chk.responseText.split("/")[1]=="1") // 쿠키변수가 존재하면 1층을 숨긴다.
+		   {
+			   document.getElementById("ads").style.display="none";
+		   }	   
+	  
+	   }
+	   chk.open("get","../main/cartNum"); // cartNum에 추가한다.
+	   chk.send();
 }
 
 
@@ -473,8 +482,43 @@ function myMenuHide()
 	
 }
 
+// 광고메시지 지우기
+var adsHeight=40;  // id="ads"의 높이
+function hideAds()
+{
+	  ss=setInterval(function()  // setInterval(함수,시간);
+	  {
+		  adsHeight--;
+		  
+		  document.getElementById("ads").style.height=adsHeight+"px";
+		  // 아래의 3개를 생략하려면 id="ads"의 overflow를 hidden으로 준다
+	      document.getElementById("first").style.height=adsHeight+"px";
+	      document.getElementsByClassName("firstEle")[0].style.height=adsHeight+"px";
+	      document.getElementsByClassName("firstEle")[1].style.height=adsHeight+"px";
+	      
+	      if(adsHeight==0)
+	      {
+	    	  clearInterval(ss); // 동작중지
+	    	  
+	    	  // 첫번째 층을 숨긴 후에 쿠키변수를 생성하여 숨겼다는 정보를 저장한다.
+	    	  var chk=new XMLHttpRequest();
+	    	  chk.onload=function()
+	    	  {
+	    		  if(chk.responseText=="1")
+	    			  alert("오류 발생");
+	    	  }
+	    	  chk.open("get","../main/topClose");
+	    	  chk.send();
+	      }	  
+	  },10);
+}
 
-
+function formSubmit()
+{
+	// alert(document.sform.search.value)
+	   if(document.sform.search.value.trim().length!=0)
+	      document.sform.submit();
+}
 
 
 
@@ -492,22 +536,24 @@ function myMenuHide()
 <body>
 
 <div id="aa"></div>
-	<div id="ads">
-		<div id="first">
-			<div id="left">회원가입하고 상품 첫 주문시 100만원 드립니다.</div>
-			<div id="right">x</div>
-		</div>
-	</div>
+	   <div id="ads">
+     <div id="first">
+       <div id="left" class="firstEle"> 회원가입하고 상품 첫 주문시 100만원 드립니다. </div>
+       <div id="right" class="firstEle"> <span id="topClose" onclick="hideAds()"> X </span> </div>
+     </div>
+   </div>
 	<header><!-- 로고,상품검색 회원가입 로그인 등등 -->
-		<div id="logo">로고</div>
-		<div id="search">
-			<div id="searchForm">
-				<input type="text" name="search" id="searchTxt" onkeyup="xCheck(this.value)" placeholder="검색어를 입력하세요">
-				<img src="../static/main/x.png" valign="middle" id="xx" onclick="clearTxt()">
-				<img src="../static/main/s.png" valign="middle">
-			</div>
-		</div>
-		<div id="member">
+		<div id="logo">로고 접속 ${names} ${users}명 접속</div>
+		<div id="search" > 
+      <div id="searchForm" >
+       <form name="sform" method="post" action="../product/productList">
+        <input type="text" style="background:white" name="search" onkeyup="xCheck(this.value)" id="searchTxt" placeholder="검색어를 입력하세요">
+        <img src="../static/main/x.png" valign="middle" id="xx" onclick="clearTxt()">
+        <img src="../static/main/s.png" valign="middle" onclick="formSubmit()">
+       </form> 
+      </div>
+      </div>
+		<div id="member" >
 		<a href="../member/cartView">
 			<img src="../static/main/cart.png" valign="middle" width="20">(<span id="cartNum"></span>)|
 		</a>

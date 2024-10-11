@@ -36,6 +36,8 @@ public interface MemberService {
 
 	public String reviewWriteOk(ReviewDto rdto, HttpSession session);
 
+	public String monthView(HttpServletRequest request, Model model, HttpSession session);
+
 	
 
 }

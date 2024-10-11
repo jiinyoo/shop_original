@@ -531,7 +531,9 @@
 					
 					<p>
 						<span id="input2"><fmt:formatNumber value="${pdto.halinPrice}" type="number"/>원</span>
-					
+						<c:if test="${pdto.su<10 }">
+							<span style="font-size:13px;">품절임박 잔여수량(${pdto.su })개</span>
+						</c:if>
 				</div>
 				
 				<div id="baesong">

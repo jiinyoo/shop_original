@@ -457,7 +457,75 @@ public class MemberServiceImpl  implements MemberService{
 		mapper.chgIsReview(rdto.getGid());
 		return "redirect:/member/jumunList";
 	}
-	
 
+	@Override
+	public String monthView(HttpServletRequest request, Model model, HttpSession session) {
+		int year,month;
+		if(request.getParameter("year")==null)
+		{
+			LocalDate today=LocalDate.now();
+			year=today.getYear();
+			month=today.getMonthValue();
+		}
+		else // 년,월의 값이 넘어 올때  0월, 13월을 처리해야 된다.
+		{			
+			year=Integer.parseInt(request.getParameter("year"));
+			month=Integer.parseInt(request.getParameter("month"));
+			
+			if(month==0) 
+			{
+			    year=year-1;
+			    month=12;
+			}
+			
+			if(month==13)
+			{
+				year=year+1;
+				month=1;
+			}
+		}
+		// 오늘기준으로 2024년 8월 1일의 객체가 필요
+		LocalDate xday=LocalDate.of(year, month, 1);
+		// 1일의 요일 => getDayOfWeek().getValue()
+		int yoil=xday.getDayOfWeek().getValue(); // 1~7
+		// 일요일은 월요일 앞에 출력되므로 월요일보다 적은값 0으로 교체
+		if(yoil==7)
+			yoil=0;
+		// 2024년 8월의 총일수
+		int chong=xday.lengthOfMonth(); 
+		// 2024년 8월의 총 몇주 
+		int ju=(int)Math.ceil((yoil+chong)/7.0); 
+		
+		//System.out.println(ju);   
+		
+		model.addAttribute("yoil",yoil);
+		model.addAttribute("chong",chong);
+		model.addAttribute("ju",ju);
+		// 뷰에 년,월 전달
+		model.addAttribute("year",year);
+		model.addAttribute("month",month);
+		
+		String userid=session.getAttribute("userid").toString();
+		String month2=String.format("%02d",month);
+		ArrayList<HashMap> mapAll=mapper.getJumun(year,month2,userid);
+		//model.addAttribute("mapAll",mapAll);
+		String writeday="";
+		String title="";
+		for(int i=0;i<mapAll.size();i++)
+		{
+		    writeday=writeday+mapAll.get(i).get("writeday").toString();
+		    title=title+"'"+mapAll.get(i).get("title").toString()+"'";
+		    if(i!=mapAll.size()-1)
+		    {
+		    	writeday=writeday+",";
+		    	title=title+",";
+		    }
+		}
+		model.addAttribute("title",title);
+		model.addAttribute("writeday",writeday);
+		System.out.println(writeday);
+		System.out.println(title);
+		return "/member/monthView";
+	}
 	
 }

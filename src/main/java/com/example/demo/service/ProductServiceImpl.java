@@ -36,7 +36,7 @@ public class ProductServiceImpl implements ProductService{
 	public String productList(HttpServletRequest request, Model model) {
 		
 		
-	
+		
 		String pcode=request.getParameter("pcode");
 
 		
@@ -140,8 +140,9 @@ public class ProductServiceImpl implements ProductService{
 			case "5": str=" writeday desc"; break;
 		}
 		
-		
-		ArrayList<ProductDto> plist=mapper.productList(pcode,str,index);
+		String search=request.getParameter("search");
+		System.out.println(search);
+		ArrayList<ProductDto> plist=mapper.productList(pcode,str,index,search);
 		//index값으로 정렬 되어 있다 => 배열처럼 정렬되어 있다.
 		//할인금액, 적립금액, 배송일 관련 처리하여 dto에 저장
 		for(int i=0; i<plist.size(); i++)
